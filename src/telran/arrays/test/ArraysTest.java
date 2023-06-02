@@ -51,7 +51,6 @@ public class ArraysTest {
 		assertArrayEquals(expected, dest);
 	}
 
-//	HW-02
 	@Test
 	void insertNumberTest() {
 		int[] src = { 1, 2, 3, 4, 5, 6, 7 };
@@ -78,53 +77,39 @@ public class ArraysTest {
 		index = 0;
 		int[] expected2 = { 2, 3, 4, 5, 6, 7 };
 		assertArrayEquals(expected2, ArraysInt.removeNumber(src, index));
-		index = 6;
-		int[] expected3 = { 1, 2, 3, 4, 5, 6 };
+		index = 4;
+		int[] expected3 = { 1, 2, 3, 4, 6, 7 };
 		assertArrayEquals(expected3, ArraysInt.removeNumber(src, index));
-
 	}
 
 	@Test
 	void binarySearchTest() {
-		int[] arraySorted = { 10, 20, 30, 40, 50, 60, 70, 80, 90 };
-		int number = 50;
-		assertEquals(4, Arrays.binarySearch(arraySorted, number));
-		number = 10;
-		assertEquals(0, Arrays.binarySearch(arraySorted, number));
-		number = 90;
-		assertEquals(8, Arrays.binarySearch(arraySorted, number));
-		number = 1;
-		assertEquals(-1, Arrays.binarySearch(arraySorted, number));
-		assertTrue(Arrays.binarySearch(arraySorted, number) < 0);
+
+		// int key)
+		int[] src = { 10, 20, 30, 40, 50, 60, 70 };
+		assertEquals(3, Arrays.binarySearch(src, 40));
+		assertEquals(0, Arrays.binarySearch(src, 10));
+		assertEquals(6, Arrays.binarySearch(src, 70));
+		assertEquals(-1, Arrays.binarySearch(src, 5));
+		assertEquals(-4, Arrays.binarySearch(src, 35));
+		assertEquals(-8, Arrays.binarySearch(src, 75));
 	}
 
 	@Test
 	void insertSortedTest() {
-		int[] arraySorted = { 10, 20, 30, 40, 50, 60, 70, 80, 90 };
-		int number = 50;
-		int[] expected1 = { 10, 20, 30, 40, 50, 50, 60, 70, 80, 90 };
-		assertArrayEquals(expected1, ArraysInt.insertNumberSorted(arraySorted, number));
-		number = 0;
-		int[] expected2 = { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90 };
-		assertArrayEquals(expected2, ArraysInt.insertNumberSorted(arraySorted, number));
-		number = 55;
-		int[] expected3 = { 10, 20, 30, 40, 50, 55, 60, 70, 80, 90 };
-		assertArrayEquals(expected3, ArraysInt.insertNumberSorted(arraySorted, number));
-		number = 5;
-		int[] expected4 = { 5, 10, 20, 30, 40, 50, 60, 70, 80, 90 };
-		assertArrayEquals(expected4, ArraysInt.insertNumberSorted(arraySorted, number));
-		number = 95;
-		int[] expected5 = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 95 };
-		assertArrayEquals(expected5, ArraysInt.insertNumberSorted(arraySorted, number));
-		number = -10;
-		int[] expected6 = { -10, 10, 20, 30, 40, 50, 60, 70, 80, 90 };
-		assertArrayEquals(expected6, ArraysInt.insertNumberSorted(arraySorted, number));
+		int[] src = { 10, 20, 30, 40, 50, 60, 70 };
+		int[] expected1 = { 10, 20, 30, 40, 40, 50, 60, 70 };
+		int[] expected2 = { 10, 10, 20, 30, 40, 50, 60, 70 };
+		int[] expected3 = { 10, 20, 30, 40, 50, 60, 70, 70 };
+		int[] expected4 = { 5, 10, 20, 30, 40, 50, 60, 70 };
+		int[] expected5 = { 10, 20, 30, 35, 40, 50, 60, 70 };
+		int[] expected6 = { 10, 20, 30, 40, 50, 60, 70, 75 };
 
-		int[] arrayUnsorted = { 30, 60, 20, 10, 40, 50 };
-		number = 55;
-		int[] expected7 = { 10, 20, 30, 40, 50, 55, 60 };
-		Arrays.sort(arrayUnsorted);
-		int[] arrayUnsortedSorted = Arrays.copyOf(arrayUnsorted, arrayUnsorted.length);
-		assertArrayEquals(expected7, ArraysInt.insertNumberSorted(arrayUnsortedSorted, number));
+		assertArrayEquals(expected1, ArraysInt.insertNumberSorted(src, 40));
+		assertArrayEquals(expected2, ArraysInt.insertNumberSorted(src, 10));
+		assertArrayEquals(expected3, ArraysInt.insertNumberSorted(src, 70));
+		assertArrayEquals(expected4, ArraysInt.insertNumberSorted(src, 5));
+		assertArrayEquals(expected5, ArraysInt.insertNumberSorted(src, 35));
+		assertArrayEquals(expected6, ArraysInt.insertNumberSorted(src, 75));
 	}
 }

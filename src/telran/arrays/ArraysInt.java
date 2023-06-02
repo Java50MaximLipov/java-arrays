@@ -17,18 +17,23 @@ public class ArraysInt {
 		return res;
 	}
 
-//	HW-02
 	public static int[] removeNumber(int[] array, int index) {
+		// returns array with no number at the given index
 		int[] res = new int[array.length - 1];
 		System.arraycopy(array, 0, res, 0, index);
-		System.arraycopy(array, index + 1, res, index, array.length - index - 1);
+		System.arraycopy(array, index + 1, res, index, res.length - index);
 		return res;
 	}
 
 	public static int[] insertNumberSorted(int[] arraySorted, int number) {
-		int bSearchValue = Arrays.binarySearch(arraySorted, number);
-		int index = bSearchValue >= 0 ? bSearchValue : -(bSearchValue + 1);
-		int[] res = insertNumber(arraySorted, index, number);
-		return res;
+		// takes sorted array and number to insert
+		// returns sorted array with the given number at a proper position
+		// apply the standard method of the class Arrays int binarySearch(int[]
+		// arraySorted, int key)
+		int index = Arrays.binarySearch(arraySorted, number);
+		if (index < 0) {
+			index = -(index + 1);
+		}
+		return insertNumber(arraySorted, index, number);
 	}
 }
