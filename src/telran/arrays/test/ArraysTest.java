@@ -1,6 +1,7 @@
 package telran.arrays.test;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import telran.arrays.ArraysInt;
 
@@ -111,5 +112,74 @@ public class ArraysTest {
 		assertArrayEquals(expected4, ArraysInt.insertNumberSorted(src, 5));
 		assertArrayEquals(expected5, ArraysInt.insertNumberSorted(src, 35));
 		assertArrayEquals(expected6, ArraysInt.insertNumberSorted(src, 75));
+
 	}
+
+	@Test
+	@Timeout(3)
+	void maxLongTest() {
+		assertEquals(Long.MAX_VALUE, getLongMax());
+	}
+
+	private long getLongMax() {
+		long res = 1;
+		while (res > 0) {
+			res *= 2;
+		}
+		return res - 1;
+	}
+
+	@Test
+	void maxIntTest() {
+		assertEquals(Integer.MAX_VALUE, getIntMax());
+	}
+
+	private long getIntMax() {
+		int res = 1;
+		while (res > 0) {
+			res++;
+		}
+		return res - 1;
+	}
+
+	// HW-03 - Section Start
+	@Test
+	void binarySearchIndexOfNumber() {
+		int[] src = { 10, 20, 30, 40, 50, 60, 70 };
+		assertEquals(3, ArraysInt.binarySearchNumber(src, 40));
+		assertEquals(1, ArraysInt.binarySearchNumber(src, 20));
+		assertEquals(0, ArraysInt.binarySearchNumber(src, 10));
+		assertEquals(6, ArraysInt.binarySearchNumber(src, 70));
+
+		assertEquals(-1, ArraysInt.binarySearchNumber(src, 0));
+		assertEquals(-4, ArraysInt.binarySearchNumber(src, 35));
+		assertEquals(-8, ArraysInt.binarySearchNumber(src, 75));
+	}
+
+//	@Test
+//	void muchRepeatedTest() {
+//		int N_ELEMENTS = 1000000;
+//		int N_RUNS = 1000000;
+//		int[] array = new int[N_ELEMENTS];
+//		for (int i = 0; i < N_RUNS; i++) {
+//			assertEquals(0, ArraysInt.binarySearchNumber(array, 0));
+//		}
+//	}
+
+	@Test
+	void arraySortingPerfTest() {
+		int[] src1 = ArraysInt.randomArrayGenerator(0, 99999, 100000);
+		int[] src2 = src1.clone();
+		int[] testArray = { 1, 99, 30, 26, 50 };
+
+//		assertArrayEquals(src1, src2);
+		ArraysInt.quickSort(testArray);
+		ArraysInt.quickSort(src1);
+		assertTrue(ArraysInt.isArraySorted(src1));
+		ArraysInt.bubbleSort(src2);
+		assertTrue(ArraysInt.isArraySorted(src2));
+		assertTrue(ArraysInt.isArraySorted(testArray));
+
+	}
+	// HW-03 - Section End
 }
