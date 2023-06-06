@@ -8,8 +8,12 @@ import telran.arrays.ArraysInt;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class ArraysTest {
+	private static final int N_ELEMENTS = 100000;
+	private static final int N_RUNS = 1000000;
+
 	@Test
 	void initialTest() {
 		int[] ar1 = { 1, 2, 3 };
@@ -112,7 +116,20 @@ public class ArraysTest {
 		assertArrayEquals(expected4, ArraysInt.insertNumberSorted(src, 5));
 		assertArrayEquals(expected5, ArraysInt.insertNumberSorted(src, 35));
 		assertArrayEquals(expected6, ArraysInt.insertNumberSorted(src, 75));
+	}
 
+	@Test
+	void maxIntTest() {
+		assertEquals(Integer.MAX_VALUE, getIntMax());
+	}
+
+	private int getIntMax() {
+		int res = 1;
+		while (res > 0) {
+			res++;
+		}
+
+		return res - 1;
 	}
 
 	@Test
@@ -126,60 +143,59 @@ public class ArraysTest {
 		while (res > 0) {
 			res *= 2;
 		}
+
 		return res - 1;
 	}
 
+//tests for HW #3
 	@Test
-	void maxIntTest() {
-		assertEquals(Integer.MAX_VALUE, getIntMax());
-	}
-
-	private long getIntMax() {
-		int res = 1;
-		while (res > 0) {
-			res++;
+	void muchRepeatedTest() {
+		int array[] = new int[N_ELEMENTS];
+		for (int i = 0; i < N_RUNS; i++) {
+			assertEquals(0, ArraysInt.binarySearch(array, 0));
 		}
-		return res - 1;
 	}
 
-	// HW-03 - Section Start
 	@Test
-	void binarySearchIndexOfNumber() {
+	void ArraysIntBinarySearchTest() {
+
+		// int key)
 		int[] src = { 10, 20, 30, 40, 50, 60, 70 };
-		assertEquals(3, ArraysInt.binarySearchNumber(src, 40));
-		assertEquals(1, ArraysInt.binarySearchNumber(src, 20));
-		assertEquals(0, ArraysInt.binarySearchNumber(src, 10));
-		assertEquals(6, ArraysInt.binarySearchNumber(src, 70));
-
-		assertEquals(-1, ArraysInt.binarySearchNumber(src, 0));
-		assertEquals(-4, ArraysInt.binarySearchNumber(src, 35));
-		assertEquals(-8, ArraysInt.binarySearchNumber(src, 75));
+		assertEquals(3, ArraysInt.binarySearch(src, 40));
+		assertEquals(0, ArraysInt.binarySearch(src, 10));
+		assertEquals(6, ArraysInt.binarySearch(src, 70));
+		assertEquals(-1, ArraysInt.binarySearch(src, 5));
+		assertEquals(-4, ArraysInt.binarySearch(src, 35));
+		assertEquals(-8, ArraysInt.binarySearch(src, 75));
 	}
-
-//	@Test
-//	void muchRepeatedTest() {
-//		int N_ELEMENTS = 1000000;
-//		int N_RUNS = 1000000;
-//		int[] array = new int[N_ELEMENTS];
-//		for (int i = 0; i < N_RUNS; i++) {
-//			assertEquals(0, ArraysInt.binarySearchNumber(array, 0));
-//		}
-//	}
 
 	@Test
-	void arraySortingPerfTest() {
-		int[] src1 = ArraysInt.randomArrayGenerator(0, 99999, 100000);
-		int[] src2 = src1.clone();
-		int[] testArray = { 1, 99, 30, 26, 50 };
+	void quickSortTest() {
+		int array[] = getRandomArray();
+		ArraysInt.quickSort(array);
+		testSorted(array);
+	}
 
-//		assertArrayEquals(src1, src2);
-		ArraysInt.quickSort(testArray);
-		ArraysInt.quickSort(src1);
-		assertTrue(ArraysInt.isArraySorted(src1));
-		ArraysInt.bubbleSort(src2);
-		assertTrue(ArraysInt.isArraySorted(src2));
-		assertTrue(ArraysInt.isArraySorted(testArray));
+	@Test
+	void bubbleSortTest() {
+		int array[] = getRandomArray();
+		ArraysInt.bubbleSort(array);
+		testSorted(array);
+	}
+
+	private void testSorted(int[] array) {
+		for (int i = 1; i < array.length; i++) {
+			assertTrue(array[i - 1] <= array[i]);
+		}
 
 	}
-	// HW-03 - Section End
+
+	private int[] getRandomArray() {
+		int[] res = new int[N_ELEMENTS];
+		Random gen = new Random();
+		for (int i = 0; i < N_ELEMENTS; i++) {
+			res[i] = gen.nextInt();
+		}
+		return res;
+	}
 }
