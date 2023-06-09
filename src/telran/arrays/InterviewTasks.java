@@ -1,7 +1,5 @@
 package telran.arrays;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public class InterviewTasks {
 	static public boolean isSumTwo(short[] array, short sum) {
 		// array of positive numbers or 0
@@ -20,47 +18,55 @@ public class InterviewTasks {
 				}
 			}
 			index++;
+
+		}
+		return res;
+
+	}
+
+	public static void sort(short[] array) {
+		// array - array of the positive or 0 number
+		// sorting with complexity O[N]
+		int[] helper = new int[Short.MAX_VALUE];
+		// helper[index] => count of occurrences for key index in array
+		// helper[1000] = 2 => key 1000 occurs twice in the source array
+		// helper[2] = 0;
+		for (int i = 0; i < array.length; i++) {
+			helper[array[i]]++;
+		}
+		int ind = 0;
+		for (int i = 0; i < helper.length; i++) {
+			for (int j = 0; j < helper[i]; j++) {
+				array[ind++] = (short) i;
+			}
+		}
+	}
+
+	public static short getMaxWithNegativePresentation(short[] array) {
+		// returns maximal positive number having an negative value with the same abs
+		// value, if no such numbers returns -1
+		short res = -1;
+		byte[] helper = new byte[Short.MAX_VALUE];
+		short candidate = -1;
+		for (int i = 0; i < array.length; i++) {
+			candidate = (short) Math.abs(array[i]);
+			if (array[i] < 0) {
+
+				res = getRes(res, helper, candidate, 1);
+			} else {
+				res = getRes(res, helper, candidate, -1);
+			}
 		}
 		return res;
 	}
 
-// HW-04
-	public static short[] sort(short[] array) {
-		short[] count = new short[Short.MAX_VALUE + 1];
-		for (int i = 0; i < array.length; i++) {
-			short num = array[i];
-			count[num]++;
+	private static short getRes(short res, byte[] helper, short candidate, int sign) {
+		if (helper[candidate] == 1 * sign && candidate > res) {
+			res = candidate;
+		} else if (helper[candidate] == 0) {
+			helper[candidate] = (byte) (-1 * sign);
 		}
-		int index = 0;
-		for (int i = 0; i < count.length; i++) {
-			while (count[i] > 0) {
-				array[index++] = (short) i;
-				count[i]--;
-			}
-		}
-		return array;
-	}
-
-	public static short getMaxWithNegativePresentation(short[] array) {
-		// FIXME getMaxWithNegativePresentation
-		// returns maximal positive number having an negative value with the same abs
-		// value, if no such numbers returns -1
-
-		short maxNumber = -1;
-		boolean[] isNegativeNumber = new boolean[Math.abs(Short.MIN_VALUE) + 1];
-		int index = 0;
-		boolean res = false;
-		while (index < array.length && !res) {
-			short number = array[index];
-			if (number < 0) {
-				isNegativeNumber[Math.abs(number)] = true;
-			} else if (number > 0 && isNegativeNumber[Math.abs(number)]) {
-				maxNumber = (short) Math.max(maxNumber, number);
-				res = true;
-			}
-			index++;
-		}
-		return maxNumber;
+		return res;
 	}
 
 }

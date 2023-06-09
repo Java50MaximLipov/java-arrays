@@ -10,7 +10,6 @@ public class MatricesInt {
 		return matrix;
 	}
 
-//HW-04
 	public static int[] getColumn(int[][] matrix, int column) {
 		int[] res = new int[matrix.length];
 		for (int i = 0; i < matrix.length; i++) {
